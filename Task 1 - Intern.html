@@ -28,29 +28,28 @@
                 {"page_id": 6549130, "creation_date": "2021-04-10", "title": "Zezico Guajajara"},
             ];
 
-            //function for diplaying results
-            function displayResult(data){
+            <!-- My Updated Code Implementation with toLocaleDateString method -->
+
+            function displayResult(data) {
                 const displayData = document.getElementById('results');
-                // Array of month names
-                const monthNames = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-                ];
                 data.forEach((dataItem, index) => {
-                    const creationDate = dataItem.creation_date.split('-');
-                    const Year = creationDate[0];
-                    // Adjust for 0-based index for Month
-                    const Month = parseInt(creationDate[1])-1;
-                    const Day = creationDate[2];
-                    // Now Get the month name from the monthNames array
-                    const monthName = monthNames[Month]
-                    //Creating the display format
-                    const displayFormat = `Article ${dataItem.title} (Page ID ${dataItem.page_id}) was created at ${monthName} ${Day}, ${Year}`;
-                    //Append each formatted data to the "results" paragraph
-                    displayData.innerHTML += displayFormat + "</br>";
-                    
-                });
-            }
+            // Parse the creation_date string to a Date object
+            const creationDate = new Date(dataItem.creation_date);
+        
+            // Use the toLocaleDateString method to format the date
+            const formattedDate = creationDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
+
+            // Creating the display format
+            const displayFormat = `Article  "${dataItem.title}"  (Page  ID  ${dataItem.page_id})  was  created  at ${formattedDate}.`;
+            
+            // Append each formatted data to the "results" paragraph
+            displayData.innerHTML += displayFormat + "<br>";
+            });
+        }
             displayResult(data);
         </script>
         <script>
